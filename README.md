@@ -182,6 +182,25 @@ npm run build
 npm run preview  # Preview the production build locally
 ```
 
+### Deploy on Vercel
+
+This repository is set up for Vercel as a Vite frontend inside `taxcalm-dashboard/`.
+
+1. Import the GitHub repository into Vercel.
+2. Set the **Root Directory** to `taxcalm-dashboard`.
+3. Use the default Vite build settings, or let Vercel read `vercel.json` from the app folder.
+4. Deploy with these values:
+    - Build Command: `npm run build`
+    - Output Directory: `dist`
+    - Install Command: `npm install`
+
+If you want a local preview of the production output before pushing, run:
+
+```bash
+npm run build
+npm run preview
+```
+
 ### Environment Setup
 
 Create a `.env` file in `taxcalm-dashboard/` for optional configuration:
