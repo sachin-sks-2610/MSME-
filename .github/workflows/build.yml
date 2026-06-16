@@ -1,0 +1,41 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: 'taxcalm-dashboard/package-lock.json'
+    
+    - name: Install dependencies
+      run: |
+        cd taxcalm-dashboard
+        npm ci
+    
+    - name: Build
+      run: |
+        cd taxcalm-dashboard
+        npm run build
+    
+    - name: Verify build output
+      run: |
+        cd taxcalm-dashboard
+        test -d dist || exit 1
+        echo "Build successful! Output available in dist/"
